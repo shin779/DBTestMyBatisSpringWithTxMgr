@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} %5p %c{1}:%L - %m%n" />
+		</Console>
+		
+		<RollingFile name="logfile" fileName="dbTest.log" filePattern="dbTest.%d{yyyy-MM-dd-HH-mm-ss}.log" immediateFlush="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} %5p %c{1}:%L - %m%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="900MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="9999" />
+		</RollingFile>
+		
+	</Appenders>
+	<Loggers>
+		<Logger name="DBTEST" level="DEBUG" additivity="false">
+			<AppenderRef ref="logfile" />
+			<AppenderRef ref="sqlLogFile" />
+		</Logger>
+
+		<Logger name="org.springframework" level="DEBUG" additivity="false">
+			<AppenderRef ref="logfile" />
+		</Logger>
+		 
+		<Logger name="org.mybatis.spring" level="DEBUG" additivity="false">
+			<AppenderRef ref="logfile" />
+			<AppenderRef ref="sqlLogFile" />
+		</Logger>
+		
+		<Root level="DEBUG">
+			<AppenderRef ref="logfile" />
+			<AppenderRef ref="console" />
+		</Root>
+		
+	</Loggers>
+</Configuration>
